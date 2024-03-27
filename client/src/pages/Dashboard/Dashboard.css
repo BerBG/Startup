@@ -1,0 +1,21 @@
+.dashboard-container {
+    width: 100%;
+    max-width: 800px; /* Largura máxima do conteúdo */
+    margin: 0 auto; /* Centralizar horizontalmente */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.2); /* Cor de fundo com transparência */
+    border: 2px solid rgba(255, 255, 255, 0.4); /* Borda */
+    border-radius: 10px; /* Cantos arredondados */
+    color: #fff; /* Cor do texto */
+  }
+  
+  .dashboard-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .dashboard-container h2 {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+  
