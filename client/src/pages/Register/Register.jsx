@@ -1,5 +1,3 @@
-// Register.js
-
 import React, { useState } from "react";
 import Layout from "../Layout/Layout";
 import axios from "axios";
@@ -16,36 +14,46 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
-    profileType: "", // Adicione o campo profileType no estado
   });
 
-  const registerUser = async (e) => {
-    e.preventDefault();
-    const { name, email, password, profileType } = data; // Certifique-se de incluir profileType aqui
+  const registerUser = async () => {
     try {
-      const { data } = await axios.post("/register", {
+      const { name, email, password } = data;
+      const response = await axios.post("/register", {
         name,
         email,
         password,
-        profileType, // Certifique-se de incluir profileType aqui também
       });
-      if (data.error) {
-        toast.error(data.error);
+      if (response.data.error) {
+        toast.error(response.data.error);
       } else {
-        setData({}); // Limpe os dados após o registro bem-sucedido
+        setData({ name: "", email: "", password: "" });
         toast.success("Registro bem-sucedido!");
-        // Redirecionar para a página de login após o registro bem-sucedido
         navigate("/login");
       }
     } catch (error) {
       console.log(error);
+      toast.error("Erro ao registrar usuário");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { name, email, password } = data;
+      if (!name || !email || !password) {
+        throw new Error("Por favor, preencha todos os campos");
+      }
+      await registerUser();
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
   return (
     <Layout>
       <div className="wrapper">
-        <form onSubmit={registerUser}>
+        <form onSubmit={handleSubmit}>
           <h1>Register</h1>
           <div className="input-box">
             <input
@@ -76,7 +84,6 @@ export default function Register() {
             />
             <FaLock className="icon" />
           </div>
-
           <button type="submit">Submit</button>
 
           <div className="register-link">

@@ -1,5 +1,3 @@
-// Login.js
-
 import React, { useState, useContext } from "react";
 import Layout from "../Layout/Layout";
 import axios from "axios";
@@ -33,12 +31,13 @@ export default function Login() {
         const userResponse = await axios.get("/profile");
         setUser(userResponse.data);
 
-        setData({});
+        setData({ email: "", password: "" });
         // Redirecionar para a página de seleção de perfil após o login
         navigate("/profile-selection");
       }
     } catch (error) {
       console.error(error);
+      toast.error("Erro ao fazer login.");
     }
   };
 

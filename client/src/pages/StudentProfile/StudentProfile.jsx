@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./StudentProfile.css";
 import userImage from "../../assets/avatar.png";
 import { toast } from "react-hot-toast";
@@ -15,7 +16,8 @@ const StudentProfile = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,9 +25,9 @@ const StudentProfile = () => {
     setErrorMessage("");
 
     try {
-      // Altere a rota de '/api/students' para '/profile'
-      await axios.put("/profile", formData);
+      await axios.post("/student", formData);
       toast.success("Perfil salvo com sucesso!");
+      navigate("/dashboard");
     } catch (error) {
       setErrorMessage(error.response.data.message);
       toast.error("Erro ao salvar perfil.");
@@ -109,10 +111,6 @@ const StudentProfile = () => {
       </div>
 
       {errorMessage && <div className="error-message">{errorMessage}</div>}
-
-      {successMessage && (
-        <div className="success-message">{successMessage}</div>
-      )}
     </div>
   );
 };

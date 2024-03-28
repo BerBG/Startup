@@ -1,5 +1,3 @@
-// routes/authRoutes.js
-
 const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middlewares/authMiddleware");
@@ -23,12 +21,14 @@ const {
 router.get("/", test);
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.get("/profile", getProfile);
+router.get("/profile", authMiddleware, getProfile);
 router.get("/logout", logoutUser);
 router.put("/profile", authMiddleware, updateProfile);
 
-// Rotas para perfis específicos
-router.post("/students", authMiddleware, saveStudentProfile);
-router.post("/tutors", authMiddleware, saveTutorProfile);
+// Rota para registro de estudante
+router.post("/student", authMiddleware, saveStudentProfile);
+
+// Rota para registro de tutor
+router.post("/tutor", authMiddleware, saveTutorProfile);
 
 module.exports = router;

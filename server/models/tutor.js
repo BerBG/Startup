@@ -18,11 +18,10 @@ const tutorSchema = new mongoose.Schema({
         required: true
     },
     photo: String, // Opcional: se desejar armazenar o URL da foto do tutor
-    socialMedia: String,
-    hourlyRate: Number,
+    email: String,
     availability: String,
     teachingMethod: String,
-    testimonials: String
+    socialMedia: String
 });
 
 const Tutor = mongoose.model('Tutor', tutorSchema);

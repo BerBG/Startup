@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./TutorProfile.css";
 import userImage from "../../assets/avatar.png";
 import { toast } from "react-hot-toast";
@@ -7,20 +8,20 @@ import { toast } from "react-hot-toast";
 const TutorProfile = () => {
   const [formData, setFormData] = useState({
     name: "",
-    experience: "",
-    areas: [],
-    description: "",
-    photo: "",
-    socialMedia: "",
-    hourlyRate: "",
-    availability: "",
-    teachingMethod: "",
-    testimonials: "",
+    experience: "", // Senioridade
+    areas: [], // Tecnologias
+    description: "", // Biografia
+    photo: "", // Foto
+    email: "", // Email
+    availability: "", // Horários
+    teachingMethod: "", // Ensino
+    socialMedia: "", // LinkedIn
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,8 +29,9 @@ const TutorProfile = () => {
     setErrorMessage("");
 
     try {
-      await axios.post("/api/tutors", formData);
+      await axios.post("/tutor", formData);
       toast.success("Perfil salvo com sucesso!");
+      navigate("/dashboard");
     } catch (error) {
       setErrorMessage(error.response.data.message);
       toast.error("Erro ao salvar perfil.");
@@ -82,9 +84,9 @@ const TutorProfile = () => {
               <span className="ellipse"></span>
               <input
                 type="text"
-                name="socialMedia"
+                name="email"
                 placeholder="Digite seu email"
-                value={formData.socialMedia}
+                value={formData.email}
                 onChange={handleChange}
               />
             </div>
@@ -135,9 +137,9 @@ const TutorProfile = () => {
               <span className="ellipse"></span>
               <input
                 type="text"
-                name="resume"
+                name="socialMedia"
                 placeholder="Digite seu perfil do Linkedin"
-                value={formData.resume}
+                value={formData.socialMedia}
                 onChange={handleChange}
               />
             </div>
@@ -166,10 +168,6 @@ const TutorProfile = () => {
       </div>
 
       {errorMessage && <div className="error-message">{errorMessage}</div>}
-
-      {successMessage && (
-        <div className="success-message">{successMessage}</div>
-      )}
     </div>
   );
 };

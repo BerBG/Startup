@@ -1,8 +1,7 @@
 const User = require("../models/user");
-const Student = require("../models/student");
-const Tutor = require("../models/tutor");
-const { hashPassword, comparePassword } = require("../helpers/auth");
 const jwt = require("jsonwebtoken");
+const { comparePassword } = require("../helpers/auth");
+const { hashPassword } = require("../helpers/auth");
 
 const test = (req, res) => {
   res.json("test is working");
@@ -11,7 +10,7 @@ const test = (req, res) => {
 // Register endpoint
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, profileType } = req.body;
+    const { name, email, password } = req.body;
     // Check name entered
     if (!name) {
       return res.json({
@@ -32,27 +31,15 @@ const registerUser = async (req, res) => {
       });
     }
 
+    // Hash the password
     const hashedPassword = await hashPassword(password);
-    let newUser;
 
-    // Create user in database based on profileType
-    if (profileType === 'student') {
-      newUser = await Student.create({
-        name,
-        email,
-        password: hashedPassword,
-      });
-    } else if (profileType === 'tutor') {
-      newUser = await Tutor.create({
-        name,
-        email,
-        password: hashedPassword,
-      });
-    } else {
-      return res.json({
-        error: "Invalid profile type",
-      });
-    }
+    // Create user in database with hashed password
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword, // Store hashed password in the database
+    });
 
     return res.json({ user: newUser });
   } catch (error) {
@@ -74,7 +61,7 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // Check if passwords match
+    // Check if passwords match using comparePassword from auth helper
     const match = await comparePassword(password, user.password);
     if (match) {
       jwt.sign(
@@ -86,27 +73,20 @@ const loginUser = async (req, res) => {
           res.cookie("token", token).json(user);
         }
       );
-    }
-    if (!match) {
-      res.json({
+    } else {
+      // Passwords do not match
+      return res.json({
         error: "Passwords do not match",
       });
     }
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 const getProfile = (req, res) => {
-  const { token } = req.cookies;
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, {}, (err, user) => {
-      if (err) throw err;
-      res.json(user);
-    });
-  } else {
-    res.json(null);
-  }
+  res.json(req.user);
 };
 
 const logoutUser = (req, res) => {
@@ -122,25 +102,13 @@ const logoutUser = (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const userId = req.user.id;
-    const profileType = req.user.profileType;
     const updatedData = req.body;
 
-    let updatedUser;
-    if (profileType === "student") {
-      updatedUser = await Student.findOneAndUpdate(
-        { _id: userId },
-        updatedData,
-        { new: true }
-      );
-    } else if (profileType === "tutor") {
-      updatedUser = await Tutor.findOneAndUpdate(
-        { _id: userId },
-        updatedData,
-        { new: true }
-      );
-    } else {
-      throw new Error("Invalid profile type");
-    }
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      updatedData,
+      { new: true }
+    );
 
     res.json({ message: 'Profile updated successfully', user: updatedUser });
   } catch (error) {

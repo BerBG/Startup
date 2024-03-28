@@ -3,11 +3,12 @@ const Student = require("../models/student");
 
 const saveStudentProfile = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, age, experience, areas } = req.body; // Ajuste aqui para receber os campos corretos
     const newStudent = await Student.create({
       name,
-      email,
-      password,
+      age,
+      experience,
+      areas,
     });
     res.json(newStudent);
   } catch (error) {
