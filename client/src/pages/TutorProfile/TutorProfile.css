@@ -1,29 +1,28 @@
 .tutor-profile {
+  margin-top: 10px;
   width: 100%;
-  min-height: 100vh;
-  background: url("../../assets/escuro.png");
   background-size: cover;
   background-position: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 0px;
   overflow: hidden;
 }
 
 .profile-container {
+  background-color: #ddeefe;
   padding-top: calc((100vh - 80vh) / 2);
   padding-bottom: calc((100vh - 80vh) / 2);
-  background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(45px);
+  backdrop-filter: blur(100px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   width: calc(100% - 60px); 
   max-width: 1600px;
   min-height: 80vh;
   border-radius: 40px;
-  margin: 30px auto;
+  margin: auto;
   display: flex;
   justify-content: space-between; 
   align-items: flex-start;
@@ -33,9 +32,8 @@
 .profile-image-container {
   width: 230px;
   height: 385px;
-  background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(45px);
+  backdrop-filter: blur(100px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   color: #fff;
   border-radius: 10px;
@@ -61,6 +59,10 @@
   color: #fff;
 }
 
+.profile-item h2{
+  color: #000000;
+}
+
 .profile-text {
   display: flex;
   align-items: center;
@@ -77,16 +79,11 @@
 .profile-text input,
 .profile-text textarea {
   flex: 1;
-  background-color: transparent;
   border: none;
   border-bottom: 1px solid #ccc;
   outline: none;
   padding: 5px 10px;
-}
-
-.profile-text input::placeholder,
-.profile-text textarea::placeholder {
-  color: #999999;
+  color: #000000;
 }
 
 .profile-image {

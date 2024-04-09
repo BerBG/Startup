@@ -1,0 +1,67 @@
+.explore-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.explore-menu h1 {
+  color: #262626;
+  font-weight: 500;
+}
+
+.explore-menu-text {
+  max-width: 60%;
+  columns: #808080;
+}
+
+.explore-menu-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  text-align: center;
+  margin: 20px 0px;
+  overflow-x: scroll;
+}
+
+.explore-menu-list::-webkit-scrollbar {
+  display: none;
+}
+
+.explore-menu-list-item img {
+  width: 6vw; /* Ajuste o tamanho da imagem */
+  height: 6vw; /* Ajuste o tamanho da imagem */
+  min-height: 60px; /* Altura mínima para garantir que a imagem não fique muito pequena */
+  object-fit: cover; /* Faz com que a imagem cubra todo o contêiner mantendo a proporção */
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform 0.2s ease-in-out;
+}
+
+
+.explore-menu-list-item p {
+  margin-top: 10px;
+  color: #747474;
+  font-size: max(1.4vw, 16px);
+  cursor: pointer;
+}
+
+.explore-menu-list-item:hover img {
+  transform: scale(0.9); /* Aumenta ligeiramente a escala da imagem */
+}
+
+.explore-menu-list-item:hover p {
+  color: #000000; /* Muda a cor do texto para amarelo ao passar o mouse */
+}
+
+.explore-menu hr {
+  margin: -10px 0px;
+  height: 2px;
+  background-color: #e2e2e2;
+  border: none;
+}
+
+
+.explore-menu-list-item.active img {
+  box-shadow: 0px 2px 5px 2px rgba(168, 161, 161, 0.5); 
+}

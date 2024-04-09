@@ -85,8 +85,27 @@ const loginUser = async (req, res) => {
   }
 };
 
-const getProfile = (req, res) => {
-  res.json(req.user);
+const getProfile = async (req, res) => {
+  try {
+    // Obtém o ID do usuário a partir do token JWT decodificado
+    const userId = req.user.id;
+
+    // Verifica se o usuário já existe no banco de dados
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Verifica se é a primeira visita do usuário
+    const isFirstVisit = !user.profile; // Se o perfil não estiver definido, é a primeira visita
+
+    // Envia os dados do usuário juntamente com a informação de primeira visita
+    res.json({ user, isFirstVisit });
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({ error: "Internal Server Error fetching user profile" });
+  }
 };
 
 const logoutUser = (req, res) => {

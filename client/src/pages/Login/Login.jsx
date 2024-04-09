@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Layout from "../Layout/Layout";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -16,36 +16,57 @@ export default function Login() {
   });
   const { setUser } = useContext(UserContext);
 
+  useEffect(() => {
+    const checkFirstVisit = async () => {
+      try {
+        const userResponse = await axios.get("/profile");
+        const { data: userData } = userResponse;
+        if (userData.firstVisit) {
+          navigate("/profile-selection");
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Error while checking first visit:", error);
+        // Handle error as needed, maybe redirect to an error page
+      }
+    };
+
+    checkFirstVisit(); // Check if it's the user's first visit when component mounts
+  }, [navigate]);
+
   const loginUser = async (e) => {
     e.preventDefault();
     const { email, password } = data;
     try {
-      const { data } = await axios.post("/login", {
+      const response = await axios.post("/login", {
         email,
         password,
       });
-      if (data.error) {
-        toast.error(data.error);
-      } else {
+      const { data: responseData } = response;
+      if (response.status === 200) {
+        toast.success("Login successful!");
         // Fetch updated user data after login
         const userResponse = await axios.get("/profile");
         setUser(userResponse.data);
 
         setData({ email: "", password: "" });
-        // Redirecionar para a página de seleção de perfil após o login
+        // Redirect to profile selection page after login
         navigate("/profile-selection");
+      } else {
+        toast.error(responseData.error || "Error occurred while logging in.");
       }
     } catch (error) {
       console.error(error);
-      toast.error("Erro ao fazer login.");
+      toast.error("Error occurred while logging in.");
     }
   };
 
   return (
     <Layout>
       <div className="wrapper">
-        <form onSubmit={loginUser}>
-          <h1>Login</h1>
+        <form onSubmit={loginUser} className="login-form">
+          <h1>Log in</h1>
           <div className="input-box">
             <input
               type="email"

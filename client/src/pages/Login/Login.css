@@ -1,10 +1,11 @@
 .wrapper {
+    margin-bottom: 150px;
     width: 420px;
     background: transparent;
-    border: 2px solid rgba(255,255,255, .2);
-    backdrop-filter: blur(45px);
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    color: #fff;
+    border: 2px solid rgb(181, 181, 181);
+    backdrop-filter: blur(70px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+    color: #000000;
     border-radius: 10px;
     padding: 30px 40px;
 }
@@ -26,16 +27,16 @@
     height: 100%;
     background: transparent;
     border: none;
-    border: 2px solid rgba(255,255,255, .2);
+    border: 2px solid #00000075;
     outline: none;
     border-radius: 40px;
     font-size: 16px;
-    color: #fff;
+    color: #ffffff;
     padding: 20px 45px 20px 20px;
 }
 
 .input-box input::placeholder {
-    color: #fff;  
+    color: #ffffff;  
 }
 
 .input-box .icon {
@@ -80,15 +81,19 @@
 .wrapper button {
     width: 100%;
     height: 45px;
-    background: #fff;
+    background: #f0e1e1;
     border: none;
     outline: none;
     border-radius: 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
     cursor: pointer;
     font-size: 16px;
-    color: #333;
+    color: #000000;
     font-weight: 700;
+}
+
+.wrapper button:hover {
+    background-color: #ffffff; 
 }
 
 .wrapper .register-link {

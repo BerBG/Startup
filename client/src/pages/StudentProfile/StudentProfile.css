@@ -1,7 +1,6 @@
 .student-profile {
+  margin-top: -10px;
   width: 100%;
-  min-height: 100vh;
-  background: url("../../assets/escuro.png");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -13,9 +12,9 @@
 }
 
 .profile-container {
+  background-color: #ddeefe;
   padding-top: calc((100vh - 80vh) / 2);
   padding-bottom: calc((100vh - 80vh) / 2);
-  background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(45px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -23,7 +22,7 @@
   max-width: 1600px;
   min-height: 80vh;
   border-radius: 40px;
-  margin: 30px auto;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -37,7 +36,7 @@
   border: 2px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(45px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  color: #fff;
+  color: #000000;
   border-radius: 10px;
   padding: 30px 40px;
   align-self: center;
@@ -82,12 +81,12 @@
   border-bottom: 1px solid #ccc;
   outline: none;
   padding: 5px 10px;
-  color: #fff;
+  color: #000000;
 }
 
 .profile-text input::placeholder,
 .profile-text textarea::placeholder {
-  color: #999999;
+  color: #000000;
 }
 
 .profile-image {
